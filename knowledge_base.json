@@ -1,0 +1,26 @@
+[
+  {
+    "error": "Database timeout",
+    "service": "DatabaseService",
+    "resolution": "Restart database and increase connection pool size",
+    "cause": "Connection pool exhaustion or slow queries"
+  },
+  {
+    "error": "Service unavailable",
+    "service": "PaymentService",
+    "resolution": "Restart service and check load balancer",
+    "cause": "Service crash or overload"
+  },
+  {
+    "error": "High memory usage",
+    "service": "DatabaseService",
+    "resolution": "Scale memory resources or optimize queries",
+    "cause": "Memory leak or heavy workload"
+  },
+  {
+    "error": "Token validation delay",
+    "service": "AuthService",
+    "resolution": "Check authentication service latency and cache tokens",
+    "cause": "Slow auth service or external dependency delay"
+  }
+]

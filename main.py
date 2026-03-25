@@ -12,7 +12,7 @@ knowledge_base = load_knowledge_base()
 def detect_anomalies(logs):
     time_buckets = defaultdict(list)
 
-    # Group logs into 1-minute buckets
+   
     for log in logs:
         minute = log["timestamp"].replace(second=0, microsecond=0)
         time_buckets[minute].append(log)
@@ -22,7 +22,7 @@ def detect_anomalies(logs):
     for minute, messages in time_buckets.items():
         error_count = sum(1 for log in messages if "ERROR" in log["message"])
 
-        if error_count > 5:  # spike threshold
+        if error_count > 5:  
             anomalies.append({
                 "time": minute,
                 "error_count": error_count,
@@ -55,7 +55,6 @@ def group_incidents(anomalies):
         if error_logs:
             most_common_error = max(set(error_logs), key=error_logs.count)
 
-            # Find service (simple assumption: most frequent)
             services = [log["service"] for log in anomaly.get("logs", [])] if "logs" in anomaly else []
             service = services[0] if services else "Unknown"
 
@@ -72,7 +71,6 @@ def group_incidents(anomalies):
     return incidents
 
 
-# 3. Severity scoring
 def calculate_severity(incident):
     count = incident["count"]
     
@@ -87,7 +85,6 @@ def calculate_severity(incident):
         return "LOW"
 
 
-# 4. Resolution suggestions
 def suggest_resolution(incident):
     incident_error = incident["type"].lower()
     incident_service = incident.get("service", "").lower()
@@ -98,7 +95,6 @@ def suggest_resolution(incident):
         kb_error = entry["error"].lower()
         kb_service = entry["service"].lower()
 
-        # Match both error and service
         if kb_error in incident_error and kb_service in incident_service:
             best_match = entry
             break

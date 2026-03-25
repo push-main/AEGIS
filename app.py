@@ -6,19 +6,15 @@ st.set_page_config(page_title="AegisOps Dashboard", layout="wide")
 
 st.title("🚀 AegisOps - AI Incident Intelligence Dashboard")
 
-# 🔄 Generate logs button
 if st.button("🔄 Generate New Logs"):
     logs = generate_logs()
 else:
     logs = generate_logs()
 
-# Process logs
 anomalies = detect_anomalies(logs)
 incidents = group_incidents(anomalies)
 
-# -----------------------
-# 📜 LOGS SECTION
-# -----------------------
+
 st.subheader("📜 Recent Logs")
 
 log_text = "\n".join([
@@ -28,9 +24,7 @@ log_text = "\n".join([
 
 st.text_area("Logs", log_text, height=250)
 
-# -----------------------
-# 🚨 INCIDENT HEADER
-# -----------------------
+
 st.subheader("🚨 Detected Incidents")
 
 if any(calculate_severity(inc) == "HIGH" for inc in incidents):
@@ -40,9 +34,7 @@ elif incidents:
 else:
     st.success("✅ System operating normally")
 
-# -----------------------
-# 🚨 INCIDENT CARDS
-# -----------------------
+
 if incidents:
     for i, incident in enumerate(incidents):
         severity = calculate_severity(incident)
@@ -53,13 +45,11 @@ if incidents:
 
             col1, col2 = st.columns(2)
 
-            # LEFT COLUMN
             with col1:
                 st.write(f"🕒 **Time:** {incident['time']}")
                 st.write(f"🧩 **Service:** {incident.get('service', 'Unknown')}")
                 st.write(f"📌 **Type:** {incident['type']}")
 
-            # RIGHT COLUMN
             with col2:
                 st.write(f"📊 **Count:** {incident['count']}")
 
@@ -70,22 +60,17 @@ if incidents:
                 else:
                     st.info(f"ℹ️ Severity: {severity}")
 
-            # 🧠 Analysis Section
             st.markdown("### 🧠 Analysis")
             st.write(f"**Possible Cause:** {result['cause']}")
 
-            # 🔍 Correlation Insight (if exists)
             if incident.get("correlation"):
                 st.info(f"🔍 Insight: {incident['correlation']}")
 
-            # 🛠 Fix Highlight
             st.success(f"🛠 Suggested Fix: {result['resolution']}")
 
             st.divider()
 
-# -----------------------
-# 📊 SUMMARY
-# -----------------------
+
 st.subheader("📊 System Summary")
 
 total_logs = len(logs)
@@ -96,7 +81,6 @@ col1, col2 = st.columns(2)
 col1.metric("Total Logs Processed", total_logs)
 col2.metric("Incidents Detected", total_incidents)
 
-# Status message
 if total_incidents == 0:
     st.success("No anomalies detected — system stable")
 else:

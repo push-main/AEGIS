@@ -22,7 +22,6 @@ def generate_logs():
         ("DatabaseService", "WARNING: High memory usage")
     ]
 
-    # Normal logs
     for i in range(50):
         timestamp = base_time + timedelta(seconds=i * 5)
 
@@ -40,7 +39,6 @@ def generate_logs():
                 "message": msg
             })
 
-    # Inject anomaly (DB spike)
     anomaly_time = base_time + timedelta(minutes=5)
 
     for i in range(10):

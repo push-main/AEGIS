@@ -1,10 +1,13 @@
 from log_generator import generate_logs
-from collections import Counter
 from collections import defaultdict
+from pathlib import Path
 import json
 
+KB_PATH = Path(__file__).parent / "knowledge_base.json"
+
+
 def load_knowledge_base():
-    with open("knowledge_base.json", "r") as f:
+    with open(KB_PATH, "r") as f:
         return json.load(f)
 
 knowledge_base = load_knowledge_base()

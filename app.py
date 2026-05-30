@@ -2,14 +2,14 @@ import streamlit as st
 from log_generator import generate_logs
 from main import detect_anomalies, group_incidents, calculate_severity, suggest_resolution
 
-st.set_page_config(page_title="AegisOps Dashboard", layout="wide")
+st.set_page_config(page_title="AEGIS Dashboard", layout="wide")
 
-st.title("🚀 AegisOps - AI Incident Intelligence Dashboard")
+st.title("🚀 AEGIS — AI Incident Intelligence Dashboard")
 
-if st.button("🔄 Generate New Logs"):
-    logs = generate_logs()
-else:
-    logs = generate_logs()
+if "logs" not in st.session_state or st.button("🔄 Generate New Logs"):
+    st.session_state.logs = generate_logs()
+
+logs = st.session_state.logs
 
 anomalies = detect_anomalies(logs)
 incidents = group_incidents(anomalies)
